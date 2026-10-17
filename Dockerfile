@@ -1,26 +1,23 @@
-FROM golang:1.26-alpine AS build_deps
+# The build runs natively on the build machine and cross-compiles for the target platform (no emulation).
+FROM --platform=$BUILDPLATFORM golang:1.26-alpine AS build
 
-RUN apk add --no-cache git
+ARG TARGETOS
+ARG TARGETARCH
 
 WORKDIR /workspace
 
-COPY go.mod .
-COPY go.sum .
-
+COPY go.mod go.sum ./
 RUN go mod download
-
-FROM build_deps AS build
 
 COPY . .
 
-RUN CGO_ENABLED=0 go build -o webhook -ldflags '-w -extldflags "-static"' .
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o webhook -ldflags '-w' .
 
-FROM alpine:3.22
-
-RUN apk add --no-cache ca-certificates && adduser -D -H -u 10001 webhook
+# distroless: CA certificates and a non-root user, no shell, no package manager; nothing has to run on the target platform.
+FROM gcr.io/distroless/static:nonroot
 
 COPY --from=build /workspace/webhook /usr/local/bin/webhook
 
-USER 10001
+USER 65532:65532
 
-ENTRYPOINT ["webhook"]
+ENTRYPOINT ["/usr/local/bin/webhook"]
