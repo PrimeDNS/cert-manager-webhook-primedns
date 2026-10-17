@@ -20,8 +20,8 @@ certificates for. For `example.com` and `*.example.com` that is one name: the ke
 ## 2. Install the webhook
 
 ```bash
-helm install primedns-webhook oci://REGISTRY/CHART_PATH \
-  --namespace cert-manager
+helm install primedns-webhook oci://ghcr.io/primedns/charts/primedns-webhook \
+  --version 0.1.0 --namespace cert-manager
 ```
 
 The chart installs the webhook next to cert-manager. `groupName` (`acme.primedns.net`) is fixed by the chart
