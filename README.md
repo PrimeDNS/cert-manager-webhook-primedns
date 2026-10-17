@@ -108,6 +108,22 @@ refuses it (403 `NAME_NOT_ALLOWED`). Give the key the scope for the target
 | `HTTP 429` / `5xx` | the webhook retries once, then reports the error to cert-manager |
 | `NAME_NOT_ALLOWED` on a CNAME-delegated name | add `cnameStrategy: Follow` to the solver and give the key the scope for the CNAME target |
 
+## Build it yourself
+
+You do not have to run our image. The code is small and open (Apache-2.0), and the `Dockerfile` in this repository builds
+it from public sources:
+
+```bash
+git clone https://github.com/PrimeDNS/cert-manager-webhook-primedns
+cd cert-manager-webhook-primedns
+docker build -t registry.example.com/primedns-webhook:0.1.0 .
+helm install primedns-webhook ./deploy/primedns-webhook --namespace cert-manager \
+  --set image.repository=registry.example.com/primedns-webhook --set image.tag=0.1.0
+```
+
+The webhook only talks to the public PrimeDNS API (`POST` and `DELETE /v1/dns/acme-challenge`). If you use our published
+image, pin it by digest instead of a tag. The first build compiles the Kubernetes libraries and takes a while.
+
 ## Development
 
 ```bash
