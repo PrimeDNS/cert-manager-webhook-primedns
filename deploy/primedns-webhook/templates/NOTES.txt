@@ -1,0 +1,14 @@
+The PrimeDNS webhook is installed.
+
+Create a Secret with a PrimeDNS API key and reference it from the issuer:
+
+  solvers:
+    - dns01:
+        cnameStrategy: Follow
+        webhook:
+          groupName: {{ .Values.groupName }}
+          solverName: primedns
+          config:
+            apiKeySecretRef:
+              name: primedns-api-key
+              key: api-key
