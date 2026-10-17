@@ -46,7 +46,7 @@ jobs:
       - id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository }}
+          images: ghcr.io/primedns/cert-manager-webhook-primedns
           tags: type=semver,pattern={{version}}
       - uses: docker/build-push-action@v6
         with:
@@ -71,4 +71,4 @@ jobs:
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
           helm package deploy/primedns-webhook --version "$VERSION" --app-version "$VERSION"
-          helm push "primedns-webhook-${VERSION}.tgz" "oci://ghcr.io/${GITHUB_REPOSITORY_OWNER}/charts"
+          helm push "primedns-webhook-${VERSION}.tgz" "oci://ghcr.io/primedns/charts"
