@@ -7,7 +7,7 @@ certManager:
 
 image:
   repository: ghcr.io/primedns/cert-manager-webhook-primedns
-  tag: "0.1.0"
+  tag: ""   # empty = the chart appVersion
   pullPolicy: IfNotPresent
 
 nameOverride: ""

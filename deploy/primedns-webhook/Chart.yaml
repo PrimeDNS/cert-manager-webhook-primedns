@@ -1,5 +1,25 @@
 apiVersion: v1
-appVersion: "0.1.0"
-description: cert-manager DNS-01 webhook solver for PrimeDNS
 name: primedns-webhook
-version: 0.1.0
+description: cert-manager DNS-01 webhook solver for PrimeDNS
+version: 0.1.1
+appVersion: "0.1.1"
+home: https://primedns.net
+sources:
+  - https://github.com/PrimeDNS/cert-manager-webhook-primedns
+keywords:
+  - cert-manager
+  - acme
+  - dns-01
+  - webhook
+  - primedns
+maintainers:
+  - name: PrimeDNS
+    url: https://primedns.net
+annotations:
+  artifacthub.io/license: Apache-2.0
+  artifacthub.io/category: security
+  artifacthub.io/links: |
+    - name: Source
+      url: https://github.com/PrimeDNS/cert-manager-webhook-primedns
+    - name: PrimeDNS
+      url: https://primedns.net
