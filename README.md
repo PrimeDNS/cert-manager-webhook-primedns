@@ -5,6 +5,8 @@ It creates and removes the `_acme-challenge` TXT record through the PrimeDNS ACM
 (`POST` / `DELETE /v1/dns/acme-challenge`), so wildcard certificates and certificates for hosts that are
 not reachable from the internet work the same way as everywhere else.
 
+Documentation with the full walkthrough: https://primedns.net/guides/cert-manager
+
 ## How it works
 
 cert-manager calls the webhook with the record name it resolved (after following a CNAME, if there is one).
@@ -21,7 +23,7 @@ certificates for. For `example.com` and `*.example.com` that is one name: the ke
 
 ```bash
 helm install primedns-webhook oci://ghcr.io/primedns/charts/primedns-webhook \
-  --version 0.1.0 --namespace cert-manager
+  --namespace cert-manager
 ```
 
 The chart installs the webhook next to cert-manager. `groupName` (`acme.primedns.net`) is fixed by the chart
